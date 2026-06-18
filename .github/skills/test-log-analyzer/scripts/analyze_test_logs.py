@@ -194,10 +194,19 @@ def generate_plot(values, name, out_dir):
 def load_template():
     script_dir = Path(__file__).resolve().parent
     template_path = script_dir.parent / "assets" / DEFAULT_TEMPLATE_NAME
+    # Read with utf-8 and replace errors to avoid encoding failures on Windows
     if template_path.exists():
-        return template_path.read_text()
-    # Fallback
-    return Path(DEFAULT_TEMPLATE_NAME).read_text()
+        text = template_path.read_text(encoding='utf-8', errors='replace')
+    else:
+        text = Path(DEFAULT_TEMPLATE_NAME).read_text(encoding='utf-8', errors='replace')
+
+    # Remove the guidance section from the template so the generated report
+    # contains only the filled report (guidance is for authors, not users).
+    guidance_marker = "\n### Placeholder guidance"
+    if guidance_marker in text:
+        text = text.split(guidance_marker, 1)[0]
+
+    return text
 
 
 def generate_report(df, metrics, sigma_tests, plots_dir, input_file=""):
