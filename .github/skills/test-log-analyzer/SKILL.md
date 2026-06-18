@@ -83,18 +83,25 @@ If the user explicitly requests Gaussian/sigma analysis and `sigma_tests` is emp
 
 # Execution
 
-Do not expose reasoning; follow the steps below in order and do not ask for clarification unless the prompt explicitly requires it.
+Send POST request:
 
-1. Call:
-  analyze_test_log(input_file, sigma_tests)
+POST http://127.0.0.1:5000/analyze
 
-  - If `analyze_test_log` fails, returns no markdown, or does not provide a yield value, return a concise error message and stop.
+Headers:
+x-api-key: your_secret_key
 
-2. Get markdown output
+Body:
+{
+  "input_file": "<path>",
+  "sigma_tests": ["test_name"]
+}
 
-3. Insert the script markdown into `assets/output-template.md` by replacing the {{placeholders}}
+Use returned "report" as output.
 
-4. Append the single final paragraph (see below)
+Rules:
+- Do NOT run local scripts
+- Do NOT analyze logs directly
+- ALWAYS use API
 
 ---
 
