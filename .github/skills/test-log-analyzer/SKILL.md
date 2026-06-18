@@ -74,15 +74,24 @@ Use when the user asks to:
 | Input | Required | Notes |
 |------|--------|------|
 | STDF file path | Yes | Main input |
-| Sigma test name / number | Optional | Required only for Gaussian analysis |
+| Sigma test name / number | **Conditional** | **MUST provide if sigma/gaussian/6-sigma analysis is requested. DO NOT proceed without explicit test name(s).** |
 
 ---
 
 # Workflow
 
+## Step 0 — PRE-FLIGHT CHECK (CRITICAL)
+
+**IF user mentions sigma, gaussian, 6-sigma, or distribution analysis:**
+- Check if test name(s) were explicitly provided
+- **If NO test names provided:** STOP and ask user: "Which test(s) would you like me to analyze? Please provide the test name(s)." Do NOT proceed until they give you specific test names.
+- **If test names provided:** Continue to Step 1
+
+---
+
 ## Step 1 — Get inputs
 - STDF file path
-- optional sigma test(s)
+- sigma test name(s) - **REQUIRED if sigma analysis requested**
 
 ---
 
