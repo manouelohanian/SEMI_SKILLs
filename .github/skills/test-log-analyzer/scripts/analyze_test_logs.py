@@ -213,17 +213,18 @@ def generate_report(df, metrics, sigma_tests, plots_dir, input_file=""):
         [f"- `{site}` — {count} failures" for site, count in metrics["site_failures"].items()]
     ) if metrics["site_failures"] else "- None"
 
-    sigma_section = ""
-    for test in sigma_tests:
-        subset = df[df["test_name"] == test]
+    if sigma_tests:
+        sigma_section = ""
+        for test in sigma_tests:
+            subset = df[df["test_name"] == test]
 
-        stats = compute_sigma(subset)
-        if not stats:
-            continue
+            stats = compute_sigma(subset)
+            if not stats:
+                continue
 
-        plot = generate_plot(subset["result"], test, plots_dir)
+            plot = generate_plot(subset["result"], test, plots_dir)
 
-        sigma_section += f"""
+            sigma_section += f"""
 #### {test}
 - Samples: {len(subset)}
 - Mean: {stats['mean']:.4f}
@@ -232,6 +233,8 @@ def generate_report(df, metrics, sigma_tests, plots_dir, input_file=""):
 - 6σ width: {stats['width']:.4f}
 - Plot: {plot}
 """
+    else:
+        sigma_section = "Not requested."
 
     return template \
         .replace("{{input_file}}", str(input_file)) \

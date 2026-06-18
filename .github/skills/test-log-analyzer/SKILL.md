@@ -10,6 +10,16 @@ This skill converts semiconductor test logs into a structured engineering summar
 
 ---
 
+## When to use this skill
+
+Use this skill when the user asks to:
+- summarize an STDF or ATDF log
+- report yield, passing parts, failing parts, top failing tests, or failure-heavy sites
+- compare fail signatures between runs or lots
+- explain which tests dominate fallout
+- run a **Gaussian / normal-distribution / 6-sigma** analysis for a test name or test number
+- extract all measurements for a named test like `Cap_Voltage_After_Discharge`, `Cont_C1_to_GND`, `Calculate_Oscillator_freq`, `Ron_DC_RF1on_AOFF`, or `RF1_Leakage_AOFF_Current`
+
 # Execution mode (STRICT TOOL MODE)
 
 - ALWAYS use the existing script:
@@ -104,7 +114,24 @@ Call: analyze_test_log(input_file, sigma_tests)
 
 ---
 
-## Step 4 — Add final analysis paragraph (REQUIRED)
+### Step 4 — Present the result using the template
+
+Always return the markdown summary generated from `assets/output-template.md`.
+
+If sigma analysis was requested, include:
+- matched test name / test number
+- number of numeric samples
+- mean
+- standard deviation
+- min / max
+- mean ± 3σ boundaries
+- total 6σ width (= 6 × σ)
+- Cp / Cpk if both limits exist and σ > 0
+- plot file path if a histogram/gaussian image was generated
+
+If the requested test cannot be found, say that explicitly and recommend the nearest exact test name from the file when available.
+
+## Step 5 — Add final analysis paragraph (REQUIRED)
 
 After the template, append **ONE short engineering paragraph**
 
