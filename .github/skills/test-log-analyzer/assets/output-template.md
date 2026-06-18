@@ -1,6 +1,7 @@
-## Chat Response Template — Test Log Analyzer
+## Response
 
-> **⚠️ Sigma Analysis Rule:** If user requests sigma/gaussian/6-sigma analysis WITHOUT specifying test names, STOP and ask them to provide the test name(s). Do NOT generate results without explicit test specification.
+## Note
+Sigma Analysis Rule:** If user requests sigma/gaussian/6-sigma analysis WITHOUT specifying test names, STOP and ask them to provide the test name(s). Do NOT generate results without explicit test specification.
 
 ### Key findings:
 - **Input file:** {{input_file}}
